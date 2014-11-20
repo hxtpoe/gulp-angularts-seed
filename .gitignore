@@ -1,0 +1,8 @@
+node_modules
+bower_components
+dist
+.tmp
+.sass-cache
+src/*.js
+src/*.js.map
+.idea

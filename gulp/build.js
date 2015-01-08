@@ -4,6 +4,8 @@ var gulp = require('gulp');
 
 var tsc = require('gulp-typescript-compiler');
 var typescript = require('gulp-tsc');
+var imagemin = require('gulp-imagemin');
+var pngcrush = require('imagemin-pngcrush');
 
 var $ = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -82,11 +84,11 @@ gulp.task('html', ['styles', 'scripts', 'partials'], function () {
 
 gulp.task('images', function () {
     return gulp.src('src/assets/images/**/*')
-        .pipe($.cache($.imagemin({
-            optimizationLevel: 3,
+        .pipe(imagemin({
             progressive: true,
-            interlaced: true
-        })))
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngcrush()]
+        }))
         .pipe(gulp.dest('dist/assets/images'))
         .pipe($.size());
 });
